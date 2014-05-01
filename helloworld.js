@@ -1,4 +1,3 @@
-// web.js
 var express = require("express");
 var logfmt = require("logfmt");
 var app = express();
