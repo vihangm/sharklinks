@@ -1,0 +1,22 @@
+{
+  "name": "sharklinks",
+  "version": "0.0.0",
+  "description": "supercharge the chrome omnibox",
+  "main": "helloworld.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "shark",
+    "links",
+    "omnibox",
+    "chrome",
+    "supercharge"
+  ],
+  "author": "Vihang Mehta",
+  "license": "MIT",
+  "dependencies": {
+    "logfmt": "^1.1.2",
+    "express": "^4.1.1"
+  }
+}
