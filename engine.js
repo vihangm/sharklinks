@@ -1,5 +1,6 @@
 var express = require("express");
 var logfmt = require("logfmt");
+var url = require('url');
 var app = express();
 
 function startsWith(str, starts){
@@ -52,7 +53,12 @@ app.get('/ping', function(req, res) {
 });
 
 app.get('/search', function(req, res) {
-  var query = req.query.q
+  var query = req.query.q;
+  var parsed = url.parse(query);
+
+  if (parsed.protocol) {
+    return res.redirect(parsed.href);
+  }
   if (query === 'diff') {
     return alldiffs(res);
   }
