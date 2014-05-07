@@ -6,49 +6,52 @@ var app = express();
 var exprs = [
   {
     pattern: /^diff$/,
-    url: 'https://phab.trifacta.com/differential/',
+    url: function() { return 'https://phab.trifacta.com/differential/'; },
   },
   {
     pattern: /^[dD][0-9]+$/,
-    url: 'https://phab.trifacta.com/',
-    param: function(inp) { return inp.toUpperCase(); },
+    url: function(inp) { return 'https://phab.trifacta.com/' + inp.toUpperCase(); },
   },
   {
     pattern: /^macro .+$/,
-    url: 'https://phab.trifacta.com/macro/?nameLike=',
-    param: function(inp) { return inp.slice(6, inp.length); },
+    url: function(inp) {
+      return 'https://phab.trifacta.com/macro/?nameLike=' + inp.slice(6, inp.length);
+    },
   },
   {
     pattern: /^macro$/,
-    url: 'https://phab.trifacta.com/macro/',
+    url: function() { return 'https://phab.trifacta.com/macro/'; },
   },
   {
     pattern: /^[pP][rR][0-9]*$/,
-    url: 'https://bitbucket.org/trifacta/trifacta/pull-request/',
-    param: function(inp) { return inp.slice(2, inp.length); },
+    url: function(inp) {
+      return 'https://bitbucket.org/trifacta/trifacta/pull-request/' + inp.slice(2, inp.length);
+    },
   },
   {
     pattern: /^[#][0-9]+$/,
-    url: 'https://bitbucket.org/trifacta/trifacta/pull-request/',
-    param: function(inp) { return inp.slice(1, inp.length); },
+    url: function(inp) {
+      return 'https://bitbucket.org/trifacta/trifacta/pull-request/' + inp.slice(1, inp.length);
+    },
   },
   {
     pattern: /^[tT][dD][-][0-9]+$/,
-    url: 'https://trifacta.atlassian.net/browse/',
-    param: function(inp) { return inp; },
+    url: function(inp) { return 'https://trifacta.atlassian.net/browse/' + inp; },
   },
   {
     pattern: /^t$/,
-    url: 'https://trifacta.atlassian.net/issues/?filter=-1',
+    url: function() { return 'https://trifacta.atlassian.net/issues/?filter=-1'; },
   },
   {
     pattern: /^w .+$/,
-    url: 'https://trifacta.atlassian.net/wiki/dosearchsite.action?queryString=',
-    param: function(inp) { return inp.slice(2, inp.length); },
+    url: function(inp) {
+      return 'https://trifacta.atlassian.net/wiki/dosearchsite.action?queryString=' +
+          inp.slice(2, inp.length);
+    },
   },
   {
     pattern: /^w$/,
-    url: 'https://trifacta.atlassian.net/wiki/',
+    url: function() { return 'https://trifacta.atlassian.net/wiki/'; },
   },
 ];
 
@@ -69,7 +72,7 @@ app.get('/search', function(req, res) {
   for (var key in exprs) {
     var expr = exprs[key];
     if (expr.pattern.test(query)) {
-      return expr.param ? res.redirect(expr.url + expr.param(query)) : res.redirect(expr.url);
+      return res.redirect(expr.url(query));
     }
   }
 
