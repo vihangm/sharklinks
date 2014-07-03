@@ -5,6 +5,10 @@ var app = express();
 
 var exprs = [
   {
+    pattern: /^diff .+$/,
+    url: function(inp) { return 'https://phab.trifacta.com/differential/?authors=' + inp.slice(5, inp.lenght); },
+  },
+  {
     pattern: /^diff$/,
     url: function() { return 'https://phab.trifacta.com/differential/'; },
   },
