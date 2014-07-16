@@ -13,6 +13,10 @@ var exprs = [
     url: function() { return 'https://phab.trifacta.com/differential/'; },
   },
   {
+    pattern: /^du .+$/,
+    url: function(inp) { return 'https://phab.trifacta.com/diffusion/TF/browse/dev/' + inp.slice(3, inp.lenght); },
+  },
+  {
     pattern: /^[dD][0-9]+$/,
     url: function(inp) { return 'https://phab.trifacta.com/' + inp.toUpperCase(); },
   },
