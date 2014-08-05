@@ -1,6 +1,5 @@
 var express = require("express");
-var logfmt = require("logfmt");
-var url = require('url');
+var validUrl = require('valid-url');
 var app = express();
 
 var exprs = [
@@ -63,18 +62,15 @@ var exprs = [
   },
 ];
 
-app.use(logfmt.requestLogger());
-
 app.get('/ping', function(req, res) {
   res.send('I AM ALIVE');
 });
 
 app.get('/search', function(req, res) {
   var query = req.query.q;
-  var parsed = url.parse(query);
 
-  if (parsed.protocol) {
-    return res.redirect(parsed.href);
+  if (validUrl.isUri(query)) {
+    return res.redirect(query);
   }
 
   for (var key in exprs) {

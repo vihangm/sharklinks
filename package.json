@@ -16,7 +16,7 @@
   "author": "Vihang Mehta",
   "license": "MIT",
   "dependencies": {
-    "logfmt": "^1.1.2",
-    "express": "^4.1.1"
+    "express": "^4.1.1",
+    "valid-url": "^1.0.9"
   }
 }
