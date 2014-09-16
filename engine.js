@@ -60,6 +60,12 @@ var exprs = [
     pattern: /^w$/,
     url: function() { return 'https://trifacta.atlassian.net/wiki/'; },
   },
+  {
+    pattern: /^g .+$/,
+    url: function(inp) {
+      return 'https://www.google.com/search?q=' + inp.slice(2, inp.length);
+    },
+  },
 ];
 
 app.get('/ping', function(req, res) {
