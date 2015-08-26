@@ -1,23 +1,31 @@
-var express = require("express");
+var express = require('express');
 var validUrl = require('valid-url');
 var app = express();
 
 var exprs = [
   {
     pattern: /^diff .+$/,
-    url: function(inp) { return 'https://phab.trifacta.com/differential/?authors=' + inp.slice(5, inp.lenght); },
+    url: function(inp) {
+      return 'https://phab.trifacta.com/differential/?authors=' + inp.slice(5, inp.lenght);
+    },
   },
   {
     pattern: /^diff$/,
-    url: function() { return 'https://phab.trifacta.com/differential/'; },
+    url: function() {
+      return 'https://phab.trifacta.com/';
+    },
   },
   {
     pattern: /^du .+$/,
-    url: function(inp) { return 'https://phab.trifacta.com/diffusion/TF/browse/dev/' + inp.slice(3, inp.lenght); },
+    url: function(inp) {
+      return 'https://phab.trifacta.com/diffusion/TF/browse/dev/' + inp.slice(3, inp.lenght);
+    },
   },
   {
     pattern: /^[dD][0-9]+$/,
-    url: function(inp) { return 'https://phab.trifacta.com/' + inp.toUpperCase(); },
+    url: function(inp) {
+      return 'https://phab.trifacta.com/' + inp.toUpperCase();
+    },
   },
   {
     pattern: /^macro .+$/,
@@ -27,45 +35,41 @@ var exprs = [
   },
   {
     pattern: /^macro$/,
-    url: function() { return 'https://phab.trifacta.com/macro/'; },
-  },
-  {
-    pattern: /^[pP][rR][0-9]*$/,
-    url: function(inp) {
-      return 'https://bitbucket.org/trifacta/trifacta/pull-request/' + inp.slice(2, inp.length);
-    },
-  },
-  {
-    pattern: /^[#][0-9]+$/,
-    url: function(inp) {
-      return 'https://bitbucket.org/trifacta/trifacta/pull-request/' + inp.slice(1, inp.length);
+    url: function() {
+      return 'https://phab.trifacta.com/macro/';
     },
   },
   {
     pattern: /^[tT][dD][-][0-9]+$/,
-    url: function(inp) { return 'https://trifacta.atlassian.net/browse/' + inp; },
+    url: function(inp) {
+      return 'https://trifacta.atlassian.net/browse/' + inp;
+    },
   },
   {
     pattern: /^t$/,
-    url: function() { return 'https://trifacta.atlassian.net/issues/?filter=-1'; },
+    url: function() {
+      return 'https://trifacta.atlassian.net/issues/?filter=-1';
+    },
   },
   {
     pattern: /^w .+$/,
     url: function(inp) {
-      return 'https://trifacta.atlassian.net/wiki/dosearchsite.action?queryString=' +
+      return 'https://confluence.trifacta.com/dosearchsite.action?queryString=' +
           inp.slice(2, inp.length);
     },
   },
   {
     pattern: /^w$/,
-    url: function() { return 'https://trifacta.atlassian.net/wiki/'; },
+    url: function() {
+      return 'https://confluence.trifacta.com/';
+    },
   },
   {
     pattern: /^g .+$/,
     url: function(inp) {
-      return 'https://www.google.com/search?q=' + inp.slice(2, inp.length);
+      return 'https://www.google.com/search?q=' + encodeURIComponent(inp.slice(2, inp.length));
     },
-  },
+  }
 ];
 
 app.get('/ping', function(req, res) {
@@ -73,6 +77,7 @@ app.get('/ping', function(req, res) {
 });
 
 app.get('/search', function(req, res) {
+  console.log(req.query.q)
   var query = req.query.q;
 
   if (validUrl.isUri(query)) {
@@ -86,10 +91,10 @@ app.get('/search', function(req, res) {
     }
   }
 
-  res.redirect('https://www.google.com/search?q=' + query);
+  res.redirect('https://www.google.com/search?q=' + encodeURIComponent(query));
 });
 
-var port = Number(process.env.PORT || 5000);
+var port = Number(process.env.PORT || 8008);
 app.listen(port, function() {
-  console.log("Listening on " + port);
+  console.log('Listening on ' + port);
 });
