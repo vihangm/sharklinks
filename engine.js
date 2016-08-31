@@ -42,13 +42,13 @@ var exprs = [
   {
     pattern: /^[tT][dD][-][0-9]+$/,
     url: function(inp) {
-      return 'https://trifacta.atlassian.net/browse/' + inp;
+      return 'https://jira.trifacta.net/browse/' + inp;
     },
   },
   {
     pattern: /^t$/,
     url: function() {
-      return 'https://trifacta.atlassian.net/issues/?filter=-1';
+      return 'https://jira.trifacta.net/issues/?filter=-1';
     },
   },
   {
